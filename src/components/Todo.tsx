@@ -36,7 +36,7 @@ function Todo() {
 
     return (
         <div className="Todo">
-            <h4 className="mb-3 text-center">Todo List</h4>
+            <h4 className="mb-3 ">Todo List</h4>
             <Form onSubmit={(e) => addTask(e)}>
                 <div className="d-flex justify-content-center align-items-center gap-3 mb-2">
                     <Form.Control
@@ -48,7 +48,7 @@ function Todo() {
                             setCurTask(e.target.value);
                         }}
                     />
-                    <Button variant="primary" type="submit">
+                    <Button variant="outline-light" type="submit">
                         Add
                     </Button>
                 </div>

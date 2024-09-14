@@ -1,4 +1,5 @@
 import './App.css';
+import Timer from './components/Timer';
 import Todo from './components/Todo';
 
 function App() {
@@ -7,6 +8,7 @@ function App() {
       <div className="TodoSession">
         <Todo/>
       </div>
+      <Timer hours={1} minutes={30}/>
     </div>
   );
 }
