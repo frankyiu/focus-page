@@ -1,38 +1,43 @@
 import { useEffect, useState } from "react";
 import "./Timer.css";
 
-function Timer({ hours = 0, minutes = 0, seconds = 0 }) {
+function Timer({minutes = 0, seconds = 0 }) {
     const [time, setTime] = useState({
-        hours: hours,
         minutes: minutes,
         seconds: seconds,
     });
 
-    const [stop, setStop] = useState(true)
+    const [stop, setStop] = useState(true);
+
+    const formatTime = (unit: number) => {
+       return unit.toString().padStart(2, '0')
+    }
 
     useEffect(() => {
-        const updateTimer = ()=>{
-            const {hours, minutes, seconds} = time
-            if (seconds>0){
-                setTime({hours, minutes, seconds: seconds - 1})
-            }else if (minutes >0) {
-                setTime({hours, minutes: minutes-1, seconds: 59})
-            }else if (hours>0) {
-                setTime({hours: hours-1, minutes: 59, seconds: 59})
-            }
-        }
+        const updateTimer = () => {
+            setTime((pre) => {
+                const { minutes, seconds } = pre;
+                if (seconds > 0) {
+                    return { minutes, seconds: seconds - 1 }
+                } else if (minutes > 0) {
+                    return { minutes: minutes - 1, seconds: 59 };
+                }
+                setStop(true)
+                return pre
+            });
+        };
+
         if (!stop) {
-            const timer =  setTimeout(updateTimer, 1000);
-            return () => clearTimeout(timer)
+            updateTimer()
+            const timer = setInterval(updateTimer, 1000);
+            return () => clearInterval(timer);
         }
-    }, [stop, time]);
-
-
+    }, [stop]);
 
     return (
         <div className="Timer">
-            {time.hours}:{time.minutes}:{time.seconds}
-            <button onClick={()=>setStop(!stop)}>Stop</button>
+            {`${formatTime(time.minutes)}:${formatTime(time.seconds)}`}
+            <button onClick={() => setStop(!stop)}>{stop? 'Start': 'Stop'}</button>
         </div>
     );
 }

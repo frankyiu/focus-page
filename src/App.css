@@ -1,15 +1,46 @@
 .App {
-  background-image: url('./assets/background.gif');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  min-height: 100vh;
-  margin: 0px;
+    /* background-image: url('./assets/background.gif'); */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    margin: 0px;
+    color: white;
+}
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.background-frame {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient( black, transparent, transparent, transparent, transparent, black);
+    z-index: 1;
+}
+
+.background iframe {
+    position: absolute;
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: auto;
+    background: linear-gradient( black, transparent, transparent, transparent, transparent, black);
 }
 
 .TodoSession {
-  margin-top: 5%;
-  padding: 20px;
-  width: 30%;
-  float: right;
 }
+
+.IconSession {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-top: 20px;
+}
+

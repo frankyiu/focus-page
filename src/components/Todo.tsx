@@ -11,7 +11,7 @@ function Todo() {
         str: string;
     };
 
-    const [tasks, setTasks] = useState<Task[]>([{isCompleted: false, str:'test'}]);
+    const [tasks, setTasks] = useState<Task[]>([]);
     const [curTask, setCurTask] = useState<string>("");
 
     const addTask = (e: React.FormEvent<HTMLFormElement>) => {
