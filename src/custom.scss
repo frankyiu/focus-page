@@ -1,21 +1,18 @@
+@import "../node_modules/bootstrap/scss/functions";
+
+
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/variables-dark";
+
+$form-range-track-height:         .2rem;
+$form-range-thumb-bg:             $gray-300;
+$form-range-thumb-width:          .8rem;
+$form-range-thumb-height:         $form-range-thumb-width;
+
 
 $theme-color: (
     "primary" : white
 );
-
-.cursor-pointer {
-    cursor: pointer;
-}
-
-.circle-button {
-    border-radius: 50%;
-    border: 1px solid white;
-    width: 80px;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
 @import '~bootstrap/scss/bootstrap.scss';
 

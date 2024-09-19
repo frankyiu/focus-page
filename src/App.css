@@ -44,3 +44,17 @@
     margin-top: 20px;
 }
 
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.circle-button {
+    border-radius: 50%;
+    border: 1px solid white;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

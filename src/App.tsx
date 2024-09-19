@@ -5,6 +5,7 @@ import Todo from "./components/Todo";
 import { FaPlay } from "react-icons/fa";
 import { FaStop } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
+import { Form } from "react-bootstrap";
 
 
 
@@ -20,6 +21,7 @@ function App() {
 
     const playerRef = useRef<any>(null);
 
+    const [volume, setVolume] = useState<number>(50);
     const [playing, setPlaying] = useState<boolean>(false);
 
 
@@ -30,6 +32,14 @@ function App() {
             playerRef.current.stopVideo()
         }
         setPlaying(!playing)
+    }
+
+    const changeVolume = (e:React.ChangeEvent<HTMLInputElement>) => {
+        const volume = parseInt(e.target.value)
+        setVolume(volume)
+        if (playerRef.current) {
+            playerRef.current.setVolume(volume)
+        }
     }
 
     useEffect(() => {
@@ -82,13 +92,16 @@ function App() {
                     </div>
                 </div>
             </div>
-            <div className="fixed-bottom d-flex justify-content-center align-items-center p-4">
+            <div className="fixed-bottom d-flex justify-content-center align-items-center p-4 gap-3">
                 <div className="circle-button">
                 {
                     playing? 
                     <FaStop className="cursor-pointer" size={24} color="white" onClick={toggleVideo}></FaStop>:
                     <FaPlay className="cursor-pointer" size={24} color="white" onClick={toggleVideo}></FaPlay>
                 }
+                </div>
+                <div>
+                    <Form.Range value={volume} onChange={changeVolume}/>
                 </div>
             </div>
         </div>
