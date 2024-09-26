@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/focus-page/static/css/main.7d109265.css",
+    "main.js": "/focus-page/static/js/main.17403fc6.js",
+    "static/js/453.1af4eb91.chunk.js": "/focus-page/static/js/453.1af4eb91.chunk.js",
+    "index.html": "/focus-page/index.html",
+    "main.7d109265.css.map": "/focus-page/static/css/main.7d109265.css.map",
+    "main.17403fc6.js.map": "/focus-page/static/js/main.17403fc6.js.map",
+    "453.1af4eb91.chunk.js.map": "/focus-page/static/js/453.1af4eb91.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7d109265.css",
+    "static/js/main.17403fc6.js"
+  ]
+}
