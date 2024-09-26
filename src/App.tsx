@@ -1,6 +1,4 @@
-import YouTube from "react-youtube";
 import "./App.css";
-import Timer from "./components/Timer";
 import Todo from "./components/Todo";
 import { FaPlay } from "react-icons/fa";
 import { FaStop } from "react-icons/fa";
@@ -8,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { Form } from "react-bootstrap";
 import { IoMdVolumeHigh } from "react-icons/io";
 import { IoMdVolumeOff } from "react-icons/io";
+import ControlBar from "./components/ControlBar";
 
 declare global {
     interface Window {
@@ -19,29 +18,7 @@ declare global {
 function App() {
     const playerRef = useRef<any>(null);
 
-    const [volume, setVolume] = useState<number>(50);
     const [playerState, setPlayerState] = useState<number>(-1);
-
-    const toggleVideo = () => {
-        if (playerState === window.YT.PlayerState.PLAYING) {
-            playerRef.current.stopVideo();
-        } else {
-            playerRef.current.playVideo();
-        }
-    };
-
-    const handleChangeVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const volume = parseInt(e.target.value);
-        changeVolume(volume);
-    };
-
-    const changeVolume = (volume: number) => {
-        setVolume(volume);
-        if (playerRef.current) {
-            playerRef.current.setVolume(volume);
-        }
-    };
-
 
     useEffect(() => {
         var tag = document.createElement("script");
@@ -66,8 +43,12 @@ function App() {
     return (
         <div className="App container-fluid ">
             <div className="background">
-                <div className="background-frame"></div>
-                <div id="player"> </div>
+                <div className={`background-frame ${playerState !== 1 && 'bg-black'}`}>
+                   <div className={`text-center align-content-center h-100 ${playerState !== 3 && 'd-none'}`}>buffering...</div> 
+                </div>
+                <div className={`${playerState === 1? '' : 'd-none'}`} >
+                    <div id="player"></div>
+                </div>
             </div>
             <div className="row">
                 <div className="col">
@@ -88,32 +69,8 @@ function App() {
                     </div>
                 </div>
             </div>
-            <div className="fixed-bottom d-flex justify-content-center align-items-center p-4 gap-3">
-                <div className="circle-button">
-                    {playerState === 1? (
-                        <FaStop
-                            className="cursor-pointer"
-                            size={24}
-                            color="white"
-                            onClick={toggleVideo}
-                        ></FaStop>
-                    ) : (
-                        <FaPlay
-                            className="cursor-pointer"
-                            size={24}
-                            color="white"
-                            onClick={toggleVideo}
-                        ></FaPlay>
-                    )}
-                </div>
-                <div className="d-flex align-items-center gap-2">
-                    {volume > 0 ? (
-                        <IoMdVolumeHigh className="cursor-pointer" onClick={() => changeVolume(0)} size={24} />
-                    ) : (
-                        <IoMdVolumeOff className="cursor-pointer" onClick={() => changeVolume(50)} size={24} />
-                    )}
-                    <Form.Range value={volume} onChange={handleChangeVolume} />
-                </div>
+            <div className="fixed-bottom">
+                <ControlBar playerState={playerState} playerRef={playerRef}/>
             </div>
         </div>
     );
