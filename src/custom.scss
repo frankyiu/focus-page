@@ -5,9 +5,13 @@
 @import "../node_modules/bootstrap/scss/variables-dark";
 
 $form-range-track-height:         .2rem;
-$form-range-thumb-bg:             $gray-300;
 $form-range-thumb-width:          .8rem;
 $form-range-thumb-height:         $form-range-thumb-width;
+$form-range-thumb-bg:             $gray-300;
+$progress-height:                 .8rem;
+$progress-bg:                     $gray-700;
+$progress-bar-bg:                 $gray-500;
+$progress-border-radius:          .1875rem;
 
 
 $theme-color: (

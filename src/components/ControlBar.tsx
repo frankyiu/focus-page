@@ -8,7 +8,7 @@ function ControlBar ({playerState, playerRef}:{playerState: number; playerRef:an
     const [volume, setVolume] = useState<number>(50);
 
     const toggleVideo = () => {
-        if (!playerRef.current)
+      if (!playerRef.current)
             return
         if (playerState === window.YT.PlayerState.PLAYING) {
             playerRef.current.stopVideo();

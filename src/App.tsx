@@ -7,6 +7,7 @@ import { Form } from "react-bootstrap";
 import { IoMdVolumeHigh } from "react-icons/io";
 import { IoMdVolumeOff } from "react-icons/io";
 import ControlBar from "./components/ControlBar";
+import Timer from "./components/Timer";
 
 declare global {
     interface Window {
@@ -53,6 +54,7 @@ function App() {
             <div className="row">
                 <div className="col">
                     <div className="p-5 fs-1">LOFI-FOCUS</div>
+                    <div className="ms-5"><Timer minutes={25} seconds={0} /></div>
                 </div>
                 <div className="col-4">
                     {/* <div className="IconSession">
