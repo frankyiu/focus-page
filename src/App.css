@@ -35,8 +35,6 @@
     background: linear-gradient( black, transparent, transparent, transparent, transparent, black);
 }
 
-.TodoSession {
-}
 
 .IconSession {
     display: flex;
@@ -57,4 +55,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.right {
+    position: fixed;
+    right:0;
 }

@@ -1,11 +1,7 @@
 import "./App.css";
 import Todo from "./components/Todo";
 import { FaPlay } from "react-icons/fa";
-import { FaStop } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
-import { Form } from "react-bootstrap";
-import { IoMdVolumeHigh } from "react-icons/io";
-import { IoMdVolumeOff } from "react-icons/io";
 import ControlBar from "./components/ControlBar";
 import Timer from "./components/Timer";
 
@@ -20,6 +16,7 @@ function App() {
     const playerRef = useRef<any>(null);
 
     const [playerState, setPlayerState] = useState<number>(-1);
+    const [onFocus, setOnFocus] = useState<boolean>(false);
 
     useEffect(() => {
         var tag = document.createElement("script");
@@ -54,25 +51,25 @@ function App() {
             <div className="row">
                 <div className="col">
                     <div className="p-5 fs-1">LOFI-FOCUS</div>
-                    <div className="ms-5"><Timer minutes={25} seconds={0} /></div>
                 </div>
                 <div className="col-4">
-                    {/* <div className="IconSession">
-                        <div className="inline-block">
-                            <div className="d-flex flex-column align-items-center">
-                                <FaPlay color="white" />
-                                <div className="mt-2">focus</div>
-                            </div>
-                        </div>
-                        <Timer minutes={25} seconds={0} />
-                    </div> */}
                     <div className="TodoSession mt-5">
                         <Todo />
                     </div>
                 </div>
             </div>
-            <div className="fixed-bottom">
-                <ControlBar playerState={playerState} playerRef={playerRef}/>
+            <div className="fixed-bottom d-flex justify-content-center align-items-center">
+                <div className=""><ControlBar playerState={playerState} playerRef={playerRef}/></div>
+                <div className="position-absolute end-0 me-5">
+                {onFocus?
+                    <Timer workTime={25} breakTime={5} play={onFocus}/>
+                    :
+                    <div className="d-flex flex-column align-items-center cursor-pointer" onClick={() => setOnFocus(true)}>
+                        <FaPlay color="white" />
+                        <div className="mt-2">Start Timer</div>
+                    </div>
+                }
+                </div>
             </div>
         </div>
     );

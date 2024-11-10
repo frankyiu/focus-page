@@ -30,7 +30,7 @@ function ControlBar ({playerState, playerRef}:{playerState: number; playerRef:an
     };
 
     return (
-        <div className="d-flex justify-content-center align-items-center p-4 gap-3">
+        <div className="d-flex p-4 gap-3">
           <div className="circle-button">
             {playerState === 1 ? (
               <FaStop

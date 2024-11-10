@@ -1,7 +1,7 @@
 import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import "./Todo.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiDelete } from "react-icons/fi";
 
 
@@ -13,6 +13,20 @@ function Todo() {
 
     const [tasks, setTasks] = useState<Task[]>([]);
     const [curTask, setCurTask] = useState<string>("");
+    const [isInitialLoad, setIsInitialLoad] = useState(false); 
+
+
+    useEffect(()=> {
+        const savedTask = JSON.parse(localStorage.getItem('todo_tasks') || '[]')
+        setTasks(savedTask)
+        setIsInitialLoad(true)
+    }, [])
+    
+    useEffect(()=> {
+        if (isInitialLoad) {
+            localStorage.setItem('todo_tasks', JSON.stringify(tasks))
+        }
+    }, [isInitialLoad, tasks])
 
     const addTask = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
