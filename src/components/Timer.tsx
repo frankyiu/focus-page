@@ -1,9 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import "./Timer.css";
 import { ProgressBar } from "react-bootstrap";
-import { FaPause, FaPlay, FaStop } from "react-icons/fa";
+import PushButton from "./PushButton";
 
 function Timer({ workTime = 0, breakTime = 0, play = false }) {
+    
+    const initialPlay = play
 
     const formatTimeStr = (unit: number) => {
         return unit.toString().padStart(2, "0");
@@ -21,45 +23,38 @@ function Timer({ workTime = 0, breakTime = 0, play = false }) {
         return time % 60
     }
 
-    const resetTimer = () => {
-        setTime(toTime(isWorkMode?  breakTime: workTime))
-        setIsWorkMode(!isWorkMode)
-        setCounter(counter+1)
-        setStart(false);
-    }
 
     const [time, setTime] = useState<number>(toTime(workTime));
     const [counter, setCounter] = useState<number>(1)
     const [isWorkMode, setIsWorkMode] = useState<boolean>(true);
-    const [start, setStart] = useState(play);
-    // const audioRef = useRef(new Audio(require('../assets/alarm.mp3')));
-    // new Audio(require('../assets/alarm.mp3')).play()
+    const [isStart, setIsStart] = useState<boolean>(initialPlay);
+    
+    const timerRef = useRef<NodeJS.Timer>()
 
-    useEffect(() => {
+
+    const startTimer = () => {
         const updateTimer = () => {
-            setTime((pre) => {
-                if (pre > 0) 
-                    return pre-1;
-                resetTimer()
-                new Audio(require('../assets/alarm.mp3')).play()
-                return pre;
-            });
+            setTime((pre) => Math.max(0, pre-1));
         };
+        const intervalId = setInterval(updateTimer, 1000);
+        timerRef.current = intervalId      
+        setIsStart(true)
+    }
 
-        if (start) {
-            const timer = setInterval(updateTimer, 1000);
-            return () => clearInterval(timer);
-        }
-    }, [start]);
+    const stopTimer = () => {
+        const intervalId = timerRef.current;
+        clearInterval(intervalId);
+        setIsStart(false)
+    }
+
+
 
     return (
         <div className="Timer">
             <div className="d-flex align-items-center gap-4"> 
-                {start? 
-                <FaPause  className="cursor-pointer" size={20} onClick={()=> setStart(!start)}/>
-                :
-                <FaPlay  className="cursor-pointer" size={20} onClick={()=> setStart(!start)}/>
-                }
+                <PushButton active={isStart} onClick={() => isStart ? stopTimer() : startTimer()}>
+                    {isStart? 'PAUSE': 'START'}
+                </PushButton>
                 <div className="clock">
                     {isWorkMode?  <div>Pomodoro#{counter}</div>: <div>Break time</div> }
                     <div className="fs-1 fw-bold lh-1">{`${formatTimeStr(toMinute(time))}:${formatTimeStr(toSecond(time))}`}</div>
