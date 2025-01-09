@@ -1,11 +1,12 @@
+import React from "react"
 import styled from "styled-components"
 
 interface PushButtonAttribute extends React.ButtonHTMLAttributes<HTMLButtonElement>{
-    active?: boolean
+    active: boolean
 }
 
 
-function PushButton({active, children, ...props}: PushButtonAttribute) {
+function PushButton({active=false, children, ...props}: PushButtonAttribute) {
     
 
     const StyledButton = styled.button`
@@ -21,22 +22,22 @@ function PushButton({active, children, ...props}: PushButtonAttribute) {
         }
     `
 
-    const FrontSpan = styled.span<{active?: boolean}>`
+    const FrontSpan = styled.span<{$active?: boolean}>`
         background: white;
         display: block;
         padding: 8px 24px;
         border-radius: 5px;
-        transform: ${props => props.active ? 'translateY(-2px)': 'translateY(-6px)'};
+        transform: ${props => props.$active ? 'translateY(-2px)': 'translateY(-6px)'};
     `
 
     return (
 
         <StyledButton {...props} >
-            <FrontSpan active={active} className="front">
+            <FrontSpan $active={active} className="front">
                 {children}
             </FrontSpan> 
         </StyledButton>
     )
 }
 
-export default PushButton
+export default React.memo(PushButton)

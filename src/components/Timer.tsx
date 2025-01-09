@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import "./Timer.css";
 import { ProgressBar } from "react-bootstrap";
 import PushButton from "./PushButton";
@@ -47,12 +47,19 @@ function Timer({ workTime = 0, breakTime = 0, play = false }) {
         setIsStart(false)
     }
 
+    useEffect(()=>{
+     if (initialPlay) 
+        startTimer()
+     return stopTimer
+    }, [initialPlay])
+
+    const memoizedToggleTimer = useCallback(()=> isStart ? stopTimer() : startTimer(), [isStart])
 
 
     return (
         <div className="Timer">
             <div className="d-flex align-items-center gap-4"> 
-                <PushButton active={isStart} onClick={() => isStart ? stopTimer() : startTimer()}>
+                <PushButton active={isStart} onClick={memoizedToggleTimer}>
                     {isStart? 'PAUSE': 'START'}
                 </PushButton>
                 <div className="clock">
