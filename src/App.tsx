@@ -15,8 +15,8 @@ declare global {
 function App() {
     const playerRef = useRef<any>(null);
 
+    const [videoId, setVideoId] = useState<string>('jfKfPfyJRdk');
     const [playerState, setPlayerState] = useState<number>(-1);
-    const [onFocus, setOnFocus] = useState<boolean>(false);
 
     useEffect(() => {
         var tag = document.createElement("script");
@@ -28,7 +28,7 @@ function App() {
 
         window.onYouTubeIframeAPIReady = () => {
             playerRef.current = new window.YT.Player("player", {
-                videoId: "jfKfPfyJRdk",
+                videoId: videoId,
                 playerVars: { autoplay: 1, controls: 0 },
                 events: {
                     'onReady': (event: any) => { event.target.playVideo(); },
@@ -36,7 +36,8 @@ function App() {
                 },
             });
         };
-    }, []);
+        
+    }, [videoId]);
 
     return (
         <div className="App container-fluid ">
@@ -51,6 +52,7 @@ function App() {
             <div className="row">
                 <div className="col">
                     <div className="p-5 fs-1">LOFI-FOCUS</div>
+                    {/* <input value={videoId} onChange={(e)=>setVideoId(e.target.value)}></input> */}
                 </div>
                 <div className="col-4">
                     <div className="TodoSession mt-5">
@@ -61,14 +63,7 @@ function App() {
             <div className="fixed-bottom d-flex justify-content-center align-items-center">
                 <div className=""><ControlBar playerState={playerState} playerRef={playerRef}/></div>
                 <div className="position-absolute end-0 me-5">
-                {onFocus?
-                    <Timer workTime={25} breakTime={5} play={onFocus}/>
-                    :
-                    <div className="d-flex flex-column align-items-center cursor-pointer" onClick={() => setOnFocus(true)}>
-                        <FaPlay color="white" />
-                        <div className="mt-2">Start Timer</div>
-                    </div>
-                }
+                <Timer workTime={25 } breakTime={5}/>
                 </div>
             </div>
         </div>

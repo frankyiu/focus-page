@@ -1,7 +1,14 @@
 
 .Timer{
     text-align: center;
+    width: 290px;
+    /* padding: 10px 20px; */
+    border-radius: 5px;
+    /* background: rgba(255,255,255, 0.1); */
+    /* background: rgba(186,73,73, 0.5); */
 }
+
+
 
 .clock{
     width: 8rem
