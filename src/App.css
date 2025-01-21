@@ -61,3 +61,12 @@
     position: fixed;
     right:0;
 }
+
+
+.magnify {
+    transition: 0.2s all;
+}
+
+.magnify:hover {
+    transform : scale(1.2)
+}

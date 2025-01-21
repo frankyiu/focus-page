@@ -4,18 +4,20 @@ import { FaPlay } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
 import ControlBar from "./components/ControlBar";
 import Timer from "./components/Timer";
+import VideoSelector from "./components/VideoSelector";
 
 declare global {
     interface Window {
         onYouTubeIframeAPIReady: any;
-        YT: any;
+        playerRef: any;
     }
 }
 
 function App() {
-    const playerRef = useRef<any>(null);
+    // const initialVideo = 'g36q0ZLvygQ'
+    const initialVideo = 'jfKfPfyJRdk'
+    const playerRef = useRef<YT.Player| null>(null);
 
-    const [videoId, setVideoId] = useState<string>('jfKfPfyJRdk');
     const [playerState, setPlayerState] = useState<number>(-1);
 
     useEffect(() => {
@@ -25,35 +27,51 @@ function App() {
         var firstScriptTag = document.getElementsByTagName("script")[0];
         if (firstScriptTag && firstScriptTag.parentNode)
             firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
+        
         window.onYouTubeIframeAPIReady = () => {
             playerRef.current = new window.YT.Player("player", {
-                videoId: videoId,
-                playerVars: { autoplay: 1, controls: 0 },
+                videoId: initialVideo,
+                playerVars: { autoplay: 0, controls: 0, cc_load_policy: 0},
                 events: {
                     'onReady': (event: any) => { event.target.playVideo(); },
                     'onStateChange': (event: any) => {setPlayerState(event.data)}
                 },
             });
+            window.playerRef = playerRef.current;
         };
+
+        return () => {
+            if (playerRef.current) 
+                playerRef.current.destroy();
+        }
         
-    }, [videoId]);
+    }, []);
+ 
+    // const onVideoIdChange = (event: { target: { value: any; }; }) => {
+    //     const newVideoId = event.target.value;
+    //     setVideoId(newVideoId);
+    //     if (playerRef.current) {
+    //       playerRef.current.loadVideoById({videoId: newVideoId});
+    //     }
+    // };
+    
 
     return (
         <div className="App container-fluid ">
             <div className="background">
-                <div className={`background-frame ${playerState !== 1 && 'bg-black'}`}>
+                <div className={`background-frame`}>
                    <div className={`text-center align-content-center h-100 ${playerState !== 3 && 'd-none'}`}>buffering...</div> 
                 </div>
-                <div className={`${playerState === 1? '' : 'd-none'}`} >
+                <div>
                     <div id="player"></div>
                 </div>
             </div>
             <div className="row">
-                <div className="col">
+                <div className="col-3">
                     <div className="p-5 fs-1">LOFI-FOCUS</div>
-                    {/* <input value={videoId} onChange={(e)=>setVideoId(e.target.value)}></input> */}
+                    <VideoSelector playerRef={playerRef}/>
                 </div>
+                <div className="col-5"/>
                 <div className="col-4">
                     <div className="TodoSession mt-5">
                         <Todo />

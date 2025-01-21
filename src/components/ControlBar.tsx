@@ -1,18 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import { FaPlay, FaStop } from "react-icons/fa";
 import { IoMdVolumeHigh, IoMdVolumeOff } from "react-icons/io";
 
 function ControlBar ({playerState, playerRef}:{playerState: number; playerRef:any} ) {
 
-    const [volume, setVolume] = useState<number>(50);
+    const [volume, setVolume] = useState<number>(100);
 
     const toggleVideo = () => {
       if (!playerRef.current)
             return
         if (playerState === window.YT.PlayerState.PLAYING) {
-            playerRef.current.stopVideo();
+            playerRef.current.pauseVideo();
         } else {
+            if (playerRef.current.getVideoData().isLive)
+              playerRef.current.seekTo(Infinity, true)
             playerRef.current.playVideo();
         }
     };
@@ -28,6 +30,7 @@ function ControlBar ({playerState, playerRef}:{playerState: number; playerRef:an
             playerRef.current.setVolume(volume);
         }
     };
+
 
     return (
         <div className="d-flex p-4 gap-3">
