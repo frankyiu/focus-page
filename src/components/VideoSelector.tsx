@@ -34,7 +34,9 @@ function VideoSelector({playerRef}: {playerRef: {current: YT.Player | null} }) {
                         <div className="cursor-pointer magnify" onClick={()=>selectVideo(index)}>{video.name}</div>
                     </div>
                 ))}
-                <div className="cursor-pointer" onClick={()=>setIsShowAdder(true)}>+ Add New Video</div>
+                <div className="d-flex">
+                    <div className="cursor-pointer magnify" onClick={()=>setIsShowAdder(true)}>+ Add New Video</div>
+                </div>
             </div>
             }
         </div>

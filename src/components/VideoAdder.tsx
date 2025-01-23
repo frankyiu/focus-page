@@ -16,12 +16,12 @@ function VideoAdder({onSubmitEvent, onExitEvent}: {onSubmitEvent: any, onExitEve
 
     const addVideo = (e: FormEvent<HTMLFormElement>)=>{
         e.preventDefault()
-        onSubmitEvent(formData)
+        if (formData.name && formData.code)
+            onSubmitEvent(formData)
     }
 
     return (
     <>
-        <div onClick={onExitEvent}>Back</div>
         <Form onSubmit={addVideo}>
         <Form.Group className="mb-3" controlId="name">
             <Form.Label>Name</Form.Label>
@@ -31,8 +31,11 @@ function VideoAdder({onSubmitEvent, onExitEvent}: {onSubmitEvent: any, onExitEve
             <Form.Label>Code</Form.Label>
             <Form.Control name="code" type="text" value={formData.code} onChange={handleChange}/>
         </Form.Group>
-        <Button variant="primary" type="submit" >
+        <Button className="me-2" variant="light" type="submit" >
             Submit
+        </Button>
+        <Button variant="outline-light" onClick={onExitEvent} >
+            Back
         </Button>
         </Form>
     </>)
