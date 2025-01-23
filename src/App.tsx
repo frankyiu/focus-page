@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import ControlBar from "./components/ControlBar";
 import Timer from "./components/Timer";
 import VideoSelector from "./components/VideoSelector";
+import VideoAdder from "./components/VideoAdder";
 
 declare global {
     interface Window {
@@ -67,8 +68,8 @@ function App() {
                 </div>
             </div>
             <div className="row">
-                <div className="col-3">
-                    <div className="p-5 fs-1">LOFI-FOCUS</div>
+                <div className="col-3 p-5">
+                    <div className="fs-1 mb-2">LOFI-FOCUS</div>
                     <VideoSelector playerRef={playerRef}/>
                 </div>
                 <div className="col-5"/>

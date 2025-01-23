@@ -1,17 +1,13 @@
 import { useState } from "react";
 import initialVideos from '../data/videos.json'
 import styled from "styled-components";
-
-interface Video {
-    name: string
-    code: string
-}
+import VideoAdder from "./VideoAdder";
 
 
 function VideoSelector({playerRef}: {playerRef: {current: YT.Player | null} }) {
 
-    
-    const [videoList, setVideolist] = useState<Video[]>(initialVideos)
+    const [isShowAdder, setIsShowAdder] = useState<boolean>(false)
+    const [videoList, setVideoList] = useState<Video[]>(initialVideos)
 
 
     const selectVideo = (index: number) => {
@@ -21,13 +17,26 @@ function VideoSelector({playerRef}: {playerRef: {current: YT.Player | null} }) {
         }   
     }
 
+    const addVideo = (newVideo: Video) => {
+        setVideoList([...videoList, newVideo])
+        setIsShowAdder(false)
+    }
+
+
     return (
-        <div className="ps-5">
-            {videoList.map( (video, index) => (
-                <div className="d-flex text-uppercase pb-1">
-                    <div className="cursor-pointer magnify" key={index} onClick={()=>selectVideo(index)}>{video.name}</div>
-                </div>
-            ))}
+        <div>
+            {isShowAdder? 
+            <VideoAdder onSubmitEvent={addVideo} onExitEvent={()=>{setIsShowAdder(false)}}/>
+            :
+            <div>
+                {videoList.map( (video, index) => (
+                    <div className="d-flex text-uppercase pb-1"  key={index}>
+                        <div className="cursor-pointer magnify" onClick={()=>selectVideo(index)}>{video.name}</div>
+                    </div>
+                ))}
+                <div className="cursor-pointer" onClick={()=>setIsShowAdder(true)}>+ Add New Video</div>
+            </div>
+            }
         </div>
     )
 }

@@ -19,10 +19,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "typeRoots": [
-        "node_modules/@types"
-    ],
-    "types": [ "youtube" ]
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   },
   "include": [
     "src"

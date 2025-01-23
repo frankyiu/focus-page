@@ -3,7 +3,9 @@ import { Form } from "react-bootstrap";
 import { FaPlay, FaStop } from "react-icons/fa";
 import { IoMdVolumeHigh, IoMdVolumeOff } from "react-icons/io";
 
-function ControlBar ({playerState, playerRef}:{playerState: number; playerRef: {current: YT.Player | null} | any} ) {
+
+
+function ControlBar ({playerState, playerRef}:{playerState: number; playerRef: {current: YT.Player | null} } ) {
 
     const [volume, setVolume] = useState<number>(100);
 
@@ -12,7 +14,7 @@ function ControlBar ({playerState, playerRef}:{playerState: number; playerRef: {
             return
         if (playerState === window.YT.PlayerState.PLAYING) {
             playerRef.current.pauseVideo();
-        } else {
+        } else {  
             if (playerRef.current.getVideoData().isLive)
               playerRef.current.seekTo(playerRef.current.getDuration(), true)
             playerRef.current.playVideo();
